@@ -1,0 +1,125 @@
+﻿<Window x:Class="TMHotel.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TMHotel"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="720" Width="1280"
+        WindowStartupLocation="CenterScreen">
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="63*"></RowDefinition>
+            <RowDefinition Height="350*"></RowDefinition>
+            <RowDefinition Height="277*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="2.4*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Image Source="/Resources/hotel.jpg" 
+               Stretch="Fill" Grid.ColumnSpan="2" Grid.RowSpan="3" Opacity="0.4"></Image>
+        <Label Content="Hotel Management" Grid.Row="0" HorizontalAlignment="Center"
+               VerticalAlignment="Top"
+               FontSize="20" FontWeight="Bold" Grid.Column="1" />
+
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Panel.ZIndex="2">
+            <StackPanel  Orientation="Horizontal">
+                <Label Content="Tên Phòng" Width="120" FontWeight="Bold" FontSize="16" Foreground="Crimson"  ></Label>
+                <TextBox x:Name="lb_ten_phong" MinWidth="180" FontWeight="Bold" FontSize="13"   
+                         IsReadOnly="True" IsEnabled="False"></TextBox>
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal">
+                <Label Content="Tình Trạng Phòng:  " Width="120" FontWeight="Bold" FontSize="13"   ></Label>
+                <TextBox x:Name="lb_tinh_trang_phong" MinWidth="180" FontWeight="Bold" FontSize="13"  IsReadOnly="True"></TextBox>
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal">
+                <Label Content="Tên Người Thuê:  " Width="120" FontWeight="Bold" ></Label>
+                <TextBox x:Name="lb_ten_nguoi_thue" MinWidth="180" IsReadOnly="True"></TextBox>
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal">
+                <Label Content="Thời Gian Thuê:  " Width="120" FontWeight="Bold" ></Label>
+                <TextBox x:Name="lb_thoi_gian_thue" MinWidth="180" IsEnabled="True" IsReadOnly="True" ></TextBox>
+                <Label Content="(h)" Width="69" FontWeight="Bold" ></Label>
+
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal">
+                <Label Content="Giá Tiền:  " Width="120" FontWeight="Bold" ></Label>
+                <TextBox x:Name="lb_gia_tien" MinWidth="180"  IsReadOnly="True"></TextBox>
+                <Label Content="(VND)" FontWeight="Bold"></Label>
+            </StackPanel>
+            <Label Background="LightBlue" Height="2" Margin="0 10 0 0 "></Label>
+
+            <StackPanel  Orientation="Horizontal" Margin="0 200 0 0"  HorizontalAlignment="Center">
+                <Button Content="Thêm Phòng" Click="btn_them_phong" Width="100" Margin="0 0 0 0" FontWeight="Medium" Height="30" 
+                        
+                        Background="LightYellow"></Button>
+                <Button Content="Sửa Phòng" Click="btn_sua_phong" Width="100" Margin="10 0 0 0" FontWeight="Medium" Height="30" 
+                        Background="LightYellow"></Button>
+                <Button Content="Xóa Phòng" Click="btn_xoa_phong" Width="100"  Margin="10 0 0 0" FontWeight="Medium" Height="30" 
+                        Background="LightYellow"></Button>
+            </StackPanel>
+            
+            <Label Height="2" Background="LightBlue" Margin="0 10 0 0"/>
+            <Label Content="Tên Phòng" FontWeight="Bold" Background="LightBlue"/>
+            <TextBox x:Name="lbl_add_tenphong" Height="23" TextWrapping="Wrap" Text="" />
+            <Label Content="Giá Phòng" FontWeight="Bold" Background="LightBlue"/>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="lbl_giaphong" HorizontalAlignment="Left" Height="23"  
+                     TextWrapping="Wrap" Text="" Width="184"/>
+                <Label Content="(VND)" FontWeight="Medium"></Label>
+            </StackPanel>
+            
+            
+        </StackPanel>
+        <DataGrid	x:Name="hotleManager"   Grid.Row="1" Grid.Column="1" 
+                    Loaded="hotleManager_Loaded"
+					 CanUserAddRows="False"
+					CanUserDeleteRows="False" CanUserResizeColumns="False"
+					CanUserResizeRows="False" CanUserReorderColumns="False"
+					ItemsSource="{Binding ListPhong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+					IsReadOnly="True" 
+               
+                    SelectionChanged="hotleManager_SelectionChanged" Margin="0,0,0,78.5">
+        </DataGrid>
+        <DataGrid	x:Name="dgRoom"   Grid.Row="1" Grid.Column="1" 
+                    Loaded="dgRoom_Loaded"
+					 CanUserAddRows="False"
+					CanUserDeleteRows="False" CanUserResizeColumns="False"
+					CanUserResizeRows="False" CanUserReorderColumns="False"
+					ItemsSource="{Binding RoomList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+					IsReadOnly="True" 
+                    SelectionChanged="dgRoom_SelectionChanged" Margin="5,276,-5,10" Grid.RowSpan="2">
+        </DataGrid>
+
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0" 
+                    VerticalAlignment="Top" Margin="0,160,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="btn_phong_trong" Content="Liệt Kê Phòng Trống" FontWeight="Medium"  Width="120" Height="30"
+                        Background="#289A48"
+                        Click="btn_phong_trong_Click"></Button>
+                <Label Width="100"></Label>
+                <Button x:Name="btn_phong_da_dat" Content="Liệt Kê Phòng Đã Đặt" FontWeight="Medium"   Width="120" Height="30"
+                        Background="#E74032"
+                        Click="btn_phong_da_dat_Click"></Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 20 0 0"
+                        HorizontalAlignment="Center">
+                <Button x:Name="btn_dat_phong" Content="Đặt Phòng" FontWeight="Medium" Width="120" Height="30"
+                        Background="LightBlue"
+                        Click="btn_dat_phong_Click"></Button>
+                <Label Width="100"></Label>
+                <Button x:Name="btn_tra_phong" Content="Trả Phòng" FontWeight="Medium"  Width="120" Height="30"
+                        Background="LightBlue"
+                        Click="btn_tra_phong_Click"></Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 30 0 0"
+                        HorizontalAlignment="Center">
+                <Button x:Name="btn_home" Content="HOME" FontWeight="Medium" Width="100" Height="50"
+                        Background="#FCC422"
+                        Click="btn_home_Click"></Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
